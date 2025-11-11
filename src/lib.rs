@@ -28,7 +28,7 @@ mod tests {
 
         loop {
             tokio::select! {
-                // Poll the crypto processor to read new sessions.
+                // Keep polling, so that the crypto processor can receive/process new sessions.
                 Some(session) = cryptos.next() => {
                     println!("CryptoProcessors switched to session {session}");
                 }
