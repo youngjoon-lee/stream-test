@@ -7,7 +7,7 @@ use futures::Stream;
 
 use crate::Session;
 
-type Message = u8;
+pub type Message = u8;
 
 pub struct CryptoProcessors<SessionStream> {
     current: CryptoProcessor,
@@ -44,7 +44,7 @@ impl<SessionStream> Stream for CryptoProcessors<SessionStream>
 where
     SessionStream: Stream<Item = Session> + Unpin,
 {
-    type Item = Session;
+    type Item = ();
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
         let this = self.get_mut();
@@ -52,7 +52,7 @@ where
             Poll::Ready(Some(new_session)) => {
                 let new_processor = CryptoProcessor(new_session);
                 this.old = Some(std::mem::replace(&mut this.current, new_processor));
-                Poll::Ready(Some(new_session))
+                Poll::Ready(Some(()))
             }
             Poll::Ready(None) => Poll::Ready(None),
             Poll::Pending => Poll::Pending,
