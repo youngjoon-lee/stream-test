@@ -42,6 +42,8 @@ mod tests {
                         cryptos
                             .decapsulate(build_message(session))
                             // NOTE: This would sometimes fail due to the timing issue.
+                            // This can happen anytime in inter-service or inter-node communication,
+                            // but I think we should somehow avoid this inside the service or inside a single task at least.
                             .expect("decapsulation must succeed with the new session")
                             .0,
                         session
