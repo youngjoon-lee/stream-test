@@ -1,0 +1,12 @@
+[package]
+name = "stream-test"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+fork_stream = "0.1.0"
+futures = "0.3.31"
+
+[dev-dependencies]
+tokio = { version = "1.48.0", features = ["macros", "rt", "time"] }
+tokio-stream = "0.1.17"
